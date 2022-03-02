@@ -7,3 +7,16 @@
     @apply hover:bg-[#4d4d4d] hover:bg-opacity-30 rounded-full cursor-pointer xl:w-auto xl:h-auto xl:px-4 xl:py-3 transition duration-150 ease-in;
   }
 }
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
