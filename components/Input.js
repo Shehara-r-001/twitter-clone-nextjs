@@ -4,6 +4,7 @@ import {
   EmojiHappyIcon,
   PhotographIcon,
   XIcon,
+  LocationMarkerIcon,
 } from "@heroicons/react/outline";
 import React, { useRef, useState } from "react";
 import "emoji-mart/css/emoji-mart.css";
@@ -136,7 +137,7 @@ function Input() {
                 />
               </div>
               <div className="icon-blue">
-                <ChartBarIcon className="h-[20px] text-[#0099ff]" />
+                <ChartBarIcon className="h-[20px] text-[#0099ff] rotate-90" />
               </div>
               <div
                 className="icon-blue"
@@ -146,6 +147,9 @@ function Input() {
               </div>
               <div className="icon-blue">
                 <CalendarIcon className="h-[20px] text-[#0099ff]" />
+              </div>
+              <div className="icon-blue">
+                <LocationMarkerIcon className="h-[20px] text-[#0099ff]" />
               </div>
 
               {showEmojis && (
