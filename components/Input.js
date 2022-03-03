@@ -18,7 +18,7 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { getDownloadURL, uploadString, ref } from "firebase/storage";
-// import { getDownloadURL, ref, uploadString } from "@firebase/storage";
+import { useSession } from "next-auth/react";
 
 function Input() {
   const [input, setInput] = useState("");
@@ -26,6 +26,7 @@ function Input() {
   const filePickerRef = useRef(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -45,10 +46,10 @@ function Input() {
     setLoading(true);
 
     const docRef = await addDoc(collection(db, "tweets"), {
-      // id: session.user.uid,
-      // username: session.user.name,
-      // userImg: session.user.image,
-      // tag: session.user.tag,
+      id: session.user.uid,
+      username: session.user.name,
+      userImg: session.user.image,
+      tag: session.user.tag,
       text: input,
       timestamp: serverTimestamp(),
     });
@@ -87,7 +88,7 @@ function Input() {
       }`}
     >
       <img
-        src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png"
+        src={session.user.image}
         alt="user-img"
         className="h-8 w-8 rounded-full cursor-pointer"
       />
