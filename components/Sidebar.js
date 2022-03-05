@@ -18,7 +18,7 @@ function Sidebar() {
   const { data: session } = useSession();
 
   return (
-    <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-3 h-screen">
+    <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-3 h-screen fixed">
       <div className=" flex items-center justify-center w-14 h-14 p-0 xl:ml-24 hoverAnim">
         <Image
           src="https://rb.gy/ogau5a"
