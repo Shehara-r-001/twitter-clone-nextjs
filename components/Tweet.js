@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
-import { useRecoilState } from "recoil";
+import { Snapshot, useRecoilState } from "recoil";
 import { modalState, postIdState } from "../atoms/modalAtom";
 import {
   collection,
@@ -35,6 +35,14 @@ function Tweet({ tweet, id, tweetPage }) {
 
   useEffect(
     () =>
+      onSnapshot(collection(db, "tweets", id, "likes"), (snapshot) =>
+        setLikes(snapshot.docs)
+      ),
+    [db, id]
+  );
+
+  useEffect(
+    () =>
       setLiked(
         likes.findIndex((like) => like.id === session?.user?.uid) !== -1
       ),
@@ -45,7 +53,15 @@ function Tweet({ tweet, id, tweetPage }) {
     if (liked) {
       await deleteDoc(doc(db, "tweets", id, "likes", session.user.uid));
     } else {
-      await setDoc(doc(db, "tweets", id, "likes", session.user.uid));
+      await setDoc(doc(db, "tweets", id, "likes", session.user.uid), {
+        username: session.user.name,
+      })
+        .then(() => {
+          console.log("liked...");
+        })
+        .catch((error) => {
+          console.log(`error is ${error}`);
+        });
     }
   };
 
@@ -88,8 +104,8 @@ function Tweet({ tweet, id, tweetPage }) {
                   >
                     @{tweet?.tag} <span> . </span>
                   </span>
-                  <span className="hover:underline text-[12px] sm:text-sm">
-                    {/* <Moment fromNow>{tweet?.timestamp?.toDate()}</Moment> */}
+                  <span className="text-[#999999] hover:underline text-[12px] sm:text-sm">
+                    <Moment fromNow>{tweet?.timestamp?.toDate()}</Moment>
                   </span>
                 </div>
                 {!tweetPage && (
