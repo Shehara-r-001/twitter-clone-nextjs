@@ -17,6 +17,7 @@ import {
   EmojiHappyIcon,
   PhotographIcon,
   XIcon,
+  LocationMarkerIcon,
 } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
@@ -25,17 +26,17 @@ function Modal() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
-  const [post, setPost] = useState();
+  const [tweet, setTweet] = useState();
   const [comment, setComment] = useState("");
   const router = useRouter();
 
-  //   useEffect(
-  //     () =>
-  //       onSnapshot(doc(db, "tweets", postId), (snapshot) => {
-  //         setPost(snapshot.data());
-  //       }),
-  //     [db]
-  //   );
+  useEffect(
+    () =>
+      onSnapshot(doc(db, "tweets", postId), (snapshot) => {
+        setTweet(snapshot.data());
+      }),
+    [db]
+  );
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -51,7 +52,7 @@ function Modal() {
     setIsOpen(false);
     setComment("");
 
-    router.push(`/${postId}`);
+    // router.push(`/${postId}`);
   };
 
   return (
@@ -86,6 +87,87 @@ function Modal() {
                   onClick={() => setIsOpen(false)}
                 >
                   <XIcon className="h-[20px] text-white" />
+                </div>
+              </div>
+              <div className="flex px-3 pt-5 pb-2 sm:px-5">
+                <div className="w-full">
+                  <div className="text-[#999999] flex gap-x-3 relative">
+                    <span className="w-0.5 h-full z-[-1] absolute left-5 top-11 bg-gray-500" />
+                    <img
+                      src={tweet?.userImg}
+                      alt=""
+                      className="h-9 w-9 rounded-full"
+                    />
+                    <div>
+                      <div className="inline-block group">
+                        <h4 className="text-[#e6e6e6] font-bold text-sm sm:text-base inline-block">
+                          {tweet?.username}
+                        </h4>
+                        <span className="ml-2 text-[12px]">
+                          {tweet?.tag} .{" "}
+                        </span>
+                        <span className="ml-1 text-[12px]">
+                          <Moment fromNow>{tweet?.timestamp?.toDate()}</Moment>
+                        </span>
+                        <p className="text-[#e6e6e6] text-sm sm:text-base">
+                          {tweet?.text}
+                        </p>
+                      </div>
+                      <div className="flex mt-5 space-x-2 w-full sm:-ml-11 -ml-11">
+                        <img
+                          src={session.user.image}
+                          alt=""
+                          className="h-9 w-9 rounded-full"
+                        />
+                        <div className="flex-grow">
+                          <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="Add a reply.."
+                            rows="2"
+                            className="bg-transparent text-sm outline-none tracking-wide w-full sm:w-[400px] min-h-[60px] no-scrollbar overflow-y-auto"
+                          />
+                          <div className="flex">
+                            <div
+                              className="icon-blue"
+                              onClick={() => filePickerRef.current.click()}
+                            >
+                              <PhotographIcon className="h-[20px] text-[#0099ff]" />
+                              <input
+                                type="file"
+                                // onChange={addImage}
+                                // ref={filePickerRef}
+                                hidden
+                              />
+                            </div>
+                            <div className="icon-blue">
+                              <ChartBarIcon className="h-[20px] text-[#0099ff] rotate-90" />
+                            </div>
+                            <div
+                              className="icon-blue"
+                              // onClick={() => setShowEmojis(!showEmojis)}
+                            >
+                              <EmojiHappyIcon className="h-[20px] text-[#0099ff]" />
+                            </div>
+                            <div className="icon-blue">
+                              <CalendarIcon className="h-[20px] text-[#0099ff]" />
+                            </div>
+                            <div className="icon-blue">
+                              <LocationMarkerIcon className="h-[20px] text-[#0099ff]" />
+                            </div>
+                            <button
+                              className="bg-[#00ace6] text-white rounded-full px-4 py-1.5 ml-auto font-bold hover:bg-[#1a8cd8]  disabled:opacity-50 disabled:cursor-default"
+                              type="submit"
+                              onClick={sendComment}
+                              disabled={!comment.trim()}
+                            >
+                              Reply
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

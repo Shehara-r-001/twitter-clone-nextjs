@@ -35,6 +35,20 @@ function Tweet({ tweet, id, tweetPage }) {
 
   useEffect(
     () =>
+      onSnapshot(
+        query(
+          collection(db, "tweets", id, "comments"),
+          orderBy("timestamp", "desc")
+        ),
+        (snapshot) => {
+          setComments(snapshot.docs);
+        }
+      ),
+    [db, id]
+  );
+
+  useEffect(
+    () =>
       onSnapshot(collection(db, "tweets", id, "likes"), (snapshot) =>
         setLikes(snapshot.docs)
       ),
