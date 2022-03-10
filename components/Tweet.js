@@ -97,11 +97,11 @@ function Tweet({ tweet, id, tweetPage }) {
             <img
               src={tweet?.userImg}
               alt=""
-              className="h-10 w-10 rounded-full mr-2"
+              className="h-9 w-9 rounded-full mr-2"
             />
           )}
           <div className="text-[#e6e6e6] ml-2">
-            <div className="flex ">
+            <div className="flex">
               <div className="flex flex-col">
                 <div className="inline-block group">
                   <h4
@@ -135,7 +135,7 @@ function Tweet({ tweet, id, tweetPage }) {
           </div>
           <div className="">
             {tweetPage && (
-              <p className="text-[#e6e6e6] text-[15px] sm:text-base">
+              <p className="text-[#e6e6e6] text-[15px] sm:text-base ml-2">
                 {tweet?.text}
               </p>
             )}
