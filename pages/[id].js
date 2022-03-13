@@ -18,6 +18,7 @@ import Login from "../components/Login";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Tweet from "../components/Tweet";
 import Comment from "../components/Comment";
+import Widgets from "../components/Widgets";
 
 function TweetPage({ trendingResults, followResults, providers }) {
   const { data: session } = useSession();
@@ -90,7 +91,10 @@ function TweetPage({ trendingResults, followResults, providers }) {
           )}
         </div>
 
-        {/* widgets */}
+        <Widgets
+          trendingResults={trendingResults}
+          followResults={followResults}
+        />
         {isOpen && <Modal />}
       </main>
     </div>

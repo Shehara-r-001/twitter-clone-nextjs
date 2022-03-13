@@ -21,7 +21,7 @@ function Feed() {
   );
 
   return (
-    <div className="text-white flex-grow border-l border-gray-600 border-r max-w-2xl sm:ml-[73px] xl:ml-[320px]">
+    <div className="text-white flex-grow border-l border-gray-600 border-r max-w-2xl sm:ml-[73px] xl:ml-[280px]">
       <div className="text-white flex items-center justify-between py-2 px-3 sticky top-0 z-20 border-b border-gray-600 bg-black">
         <h2 className="font-semibold">Home</h2>
         <div className="hoverAnim w-9 h-9 flex items-center justify-center xl:p-0">
